@@ -4,24 +4,30 @@ services:
     build:
       context: frontend
       target: development
+    container_name: frontend
+    hostname: frontend
+    working_dir: /code/src
     networks:
       - client-side
     ports:
       - 3000:3000
     volumes:
-      - ./frontend/src:/code/src:ro
+      - ./frontend/src:/code/src
 
   backend:
     build:
       context: backend
       target: development
+    container_name: backend
+    hostname: backend
+    working_dir: /code/src
     environment:
       - ADDRESS=0.0.0.0:8000
       - RUST_LOG=debug
-      - PG_DBNAME=postgres
+      - PG_DBNAME=atacs2024_db
       - PG_HOST=db
-      - PG_USER=postgres
-      - PG_PASSWORD=mysecretpassword
+      - PG_USER=sekiguchi
+      - PG_PASSWORD=kaseki
     networks:
       - client-side
       - server-side
@@ -32,8 +38,14 @@ services:
       - db
 
   db:
-    image: postgres:12-alpine
+    build:
+      context: db
+      target: development
+#    image: postgres:12-alpine
     restart: always
+    container_name: pgdb
+    hostname: pgdb
+    working_dir: /root/data
     environment:
       - POSTGRES_PASSWORD=mysecretpassword
     networks:
@@ -41,6 +53,7 @@ services:
     ports:
       - 5432:5432
     volumes:
+      - ./db/data:/root/data
       - db-data:/var/lib/postgresql/data
 
 networks:

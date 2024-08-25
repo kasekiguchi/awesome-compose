@@ -1,32 +1,35 @@
-import React, { useEffect, useState } from "react";
+import React, { StrictMode, useEffect, useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
+import GridExample from "./Grids";
 
 function App() {
   const [message, setMessage] = useState();
+  const [members, setMember] = useState();
   useEffect(() => {
-    fetch("/api/users")
+    fetch("/api/members")
       .then((res) => res.json())
-      .then((res) => setMessage(`Hello with ${res.length} users`))
+      .then((res) => {
+        console.log(res);
+        setMember(res)
+        setMessage(`Hello with ${res.length} members`);
+      })
       .catch(console.error);
+    // fetch("/api/users")
+    //   .then((res) => res.json())
+    //   .then((res) => {console.log("hogehoge");
+    //     setMessage(`Hello with ${res.length} users`)})
+    //   .catch(console.error);
   }, [setMessage]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+      {/* <header className="App-header">
         <p>{message || "Loading..."}</p>
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      </header> */}
+        {/* <StrictMode> */}
+          <GridExample data={members}/>
+        {/* </StrictMode> */}
     </div>
   );
 }

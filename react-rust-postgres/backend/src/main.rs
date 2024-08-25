@@ -3,6 +3,7 @@ use deadpool_postgres::Pool;
 
 mod postgres;
 mod user;
+mod member;
 
 #[get("/users")]
 async fn list_users(pool: web::Data<Pool>) -> HttpResponse {
@@ -22,6 +23,24 @@ async fn list_users(pool: web::Data<Pool>) -> HttpResponse {
     }
 }
 
+#[get("/members")]
+async fn list_members(pool: web::Data<Pool>) -> HttpResponse {
+    let client = match pool.get().await {
+        Ok(client) => client,
+        Err(err) => {
+            log::debug!("unable to get postgres client: {:?}", err);
+            return HttpResponse::InternalServerError().json("unable to get postgres client");
+        }
+    };
+    match member::Member::all(&**client).await {
+        Ok(list) => HttpResponse::Ok().json(list),
+        Err(err) => {
+            log::debug!("unable to fetch members: {:?}", err);
+            return HttpResponse::InternalServerError().json("unable to fetch members");
+        }
+    }
+}
+
 fn address() -> String {
     std::env::var("ADDRESS").unwrap_or_else(|_| "127.0.0.1:8000".into())
 }
@@ -37,9 +56,9 @@ async fn main() -> std::io::Result<()> {
     HttpServer::new(move || {
         App::new()
             .app_data(web::Data::new(pg_pool.clone()))
-            .service(list_users)
-    })
+            .service(list_members)
+    })      
     .bind(&address)?
     .run()
     .await
-}
+}//.service(list_users)
