@@ -5,7 +5,7 @@ import GridExample from "./Grids";
 
 function App() {
   const [message, setMessage] = useState();
-  const [members, setMember] = useState();
+  const [members, setMember] = useState([{category:null}]);
   useEffect(() => {
     fetch("/api/members")
       .then((res) => res.json())
@@ -27,8 +27,9 @@ function App() {
       {/* <header className="App-header">
         <p>{message || "Loading..."}</p>
       </header> */}
+      <h1>ATACS2024</h1>
         {/* <StrictMode> */}
-          <GridExample data={members}/>
+          <GridExample data={members.filter((item)=>item.category==="ドクターセッション")}/>
         {/* </StrictMode> */}
     </div>
   );
