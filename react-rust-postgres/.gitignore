@@ -1,3 +1,4 @@
 *.xlsx
 */node-modules/*
 */node_modules/*
+*.venv/*
