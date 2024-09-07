@@ -13,6 +13,8 @@ services:
       - 3000:3000
     volumes:
       - ./frontend/src:/code/src
+      - node-modules:/code/node_modules
+      #- ./frontend/node_modules:/code/node_modules
 
   backend:
     build:
@@ -41,7 +43,7 @@ services:
     build:
       context: db
       target: development
-#    image: postgres:12-alpine
+      #image: postgres:12-alpine
     restart: always
     container_name: pgdb
     hostname: pgdb
@@ -63,3 +65,4 @@ networks:
 volumes:
   backend-cache: {}
   db-data: {}
+  node-modules: {}

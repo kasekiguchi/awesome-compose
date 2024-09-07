@@ -1,7 +1,8 @@
 import React, { StrictMode, useEffect, useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import GridExample from "./Grids";
+//import GridExample from "./Grids";
+import GridExample from "./DesignCategory";
 
 function App() {
   const [message, setMessage] = useState();
@@ -22,6 +23,7 @@ function App() {
     //   .catch(console.error);
   }, [setMessage]);
 
+
   return (
     <div className="App">
       {/* <header className="App-header">
@@ -29,7 +31,7 @@ function App() {
       </header> */}
       <h1>ATACS2024</h1>
         {/* <StrictMode> */}
-          <GridExample data={members.filter((item)=>item.category==="ドクターセッション")}/>
+          <GridExample data={members}/>
         {/* </StrictMode> */}
     </div>
   );

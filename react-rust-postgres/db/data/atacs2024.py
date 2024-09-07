@@ -1,10 +1,16 @@
-#CREATE TABLE atacs2024_db.member_tbl (UID varchar(5),row integer, group varchar(10), name varchar(50), yomi varchar(50), email varchar(30), grade varchar(10), type varchar(10), key1 varchar(50), key2 varchar(50), key3 varchar(50), title varchar(50), opt varchar(100));
-# pip install openpyxl
-# pip install xlrd
+# docker compose exec db bash
+# psql -U postgres
+#> create database atacs2024_db; 
+#> create user sekiguchi with password 'kaseki';
 
 import sys
 import openpyxl as excel
 import psycopg2 as pg
+from typing import Optional
+
+from psycopg2 import connect
+from psycopg2._psycopg import connection, cursor
+from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
 # シートのDB対応
 
@@ -41,19 +47,38 @@ PASSWORD = 'kaseki'
 
 def db_init(db_map, db, sheet_name):
     param = []
-    table_name = 'member_tb' #db_map[sheet_name]['table_name']
 
     for k, v in db_map[sheet_name]['column'].items():
         param.append(f"{k} {v['type']}")
 
     params = ','.join(param)
 
+    table_name = 'member_tb' #db_map[sheet_name]['table_name']
     db.execute(f'DROP TABLE IF EXISTS {table_name}')
     db.execute(f'CREATE TABLE {table_name}({params})')
 
+dsn = {
+    "dbname": "postgres",
+    "user": "postgres",
+    "password": "postgres",
+    "port": "5432",
+    "host": "localhost",
+}
 
 def db_insert(book, db_map):
+    conn0: Optional[connection] = None
+    conn0 = connect(**dsn)
+    conn0.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
 
+    with conn0.cursor() as cur0:
+        cur0: cursor
+
+        cur0.execute("drop database if exists atacs2024_db;")
+        cur0.execute("create database atacs2024_db;")
+        cur0.execute("drop user if exists sekiguchi;")
+        cur0.execute(f"CREATE USER sekiguchi with password 'kaseki';")
+    print("finish")
+    
     conn = pg.connect(f'host={HOST} port={PORT} dbname={DB_NAME} user={USER} password={PASSWORD}')
     cur = conn.cursor()
     sheet_name = 'ForDatabase'
@@ -98,9 +123,9 @@ def db_insert(book, db_map):
     conn.close()
 
 
-fp = sys.argv[1]
+# fp = sys.argv[1]
 # print(fp,sys.argv[1])
-# fp = "ATACKS2024_参加者一覧.xlsx"
+fp = "ATACKS2024_参加者一覧.xlsx"
 wb = excel.load_workbook(fp, data_only=True)
 # conn = pg.connect(f'host={HOST} port={PORT} dbname={DB_NAME} user={USER} password={PASSWORD}')
 # cur = conn.cursor()
