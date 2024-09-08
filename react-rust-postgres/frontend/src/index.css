@@ -11,3 +11,77 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.session {
+  margin-bottom: 10em;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+
+.container .item {
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 80%;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+/* Responsive layout - makes a one column layout instead of a two-column layout */
+@media (max-width: 800px) {
+  .container {
+    flex-direction: column;
+  }
+}
+
+.title-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+
+/* Responsive layout - makes a one column layout instead of a two-column layout */
+@media (max-width: 1200px) {
+  .title-container {
+    flex-direction: column;
+  }
+}
+
+.title-container .item {
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 80%;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+h2 {
+  position: relative;
+  padding: 0.25em 3em;
+  width: 40%;
+  border-top: solid 2px black;
+  border-bottom: solid 2px black;
+}
+h2:before, h2:after {
+  content: '';
+  position: absolute;
+  top: -7px;
+  width: 2px;
+  height: -webkit-calc(80% + 14px);
+  height: calc(100% + 14px);
+  background-color: black;
+}
+h2:before {
+  left: 7px;
+}
+h2:after {
+  right: 7px;
+}
+

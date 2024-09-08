@@ -15,7 +15,10 @@ pub struct Member {
     pub key3: String,
     pub title: String,
     pub opt: String,
-    pub slot: String,
+    pub slot1: String,
+    pub order1: String,
+    pub slot2: String,
+    pub order2: String,
 }
 
 impl From<Row> for Member {
@@ -34,7 +37,10 @@ impl From<Row> for Member {
             key3: row.get(10),
             title: row.get(11),
             opt: row.get(12),
-            slot: row.get(13),
+            slot1: row.get(13),
+            order1: row.get(14),
+            slot2: row.get(15),
+            order2: row.get(16),
         }
     }
 }
