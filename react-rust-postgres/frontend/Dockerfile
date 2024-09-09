@@ -30,8 +30,8 @@ CMD [ "npm", "start" ]
 
 FROM development AS builder
 
-RUN npm run build
-
+#RUN npm run build
+RUN NODE_OPTIONS=--openssl-legacy-provider npm run build
 FROM nginx:1.13-alpine
 
 COPY --from=builder /code/build /usr/share/nginx/html

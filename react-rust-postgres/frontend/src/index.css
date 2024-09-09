@@ -43,7 +43,7 @@ code {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: row;
+  flex-direction: column;
 }
 
 /* Responsive layout - makes a one column layout instead of a two-column layout */

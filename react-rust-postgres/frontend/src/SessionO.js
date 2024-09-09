@@ -26,7 +26,6 @@ function addMinutesToTime(timeString, minutesToAdd) {
 const ContaineredSession = (props) => {
   const setime = ["10:30 - 11:30", "11:40 - 12:40", "14:00 - 15:00"];
   const stime = ["10:30", "11:40", "14:00"];
-  const oroom = ["21C", "22C"];
   let num = props.num;
   const titleRenderer = (gridObject) => {
     let title = gridObject.data.title;
@@ -68,13 +67,13 @@ const ContaineredSession = (props) => {
       <div class="item">
         <h3>Room: 21C </h3>
         <div className="ag-theme-quartz" style={{ height: 300 }}>
-          <AgGridReact suppressColumnVirtualisation={true} rowData={props.data.filter((data) => data.slot1 == 2 * num + 1).sort((a, b) => a.order1 - b.order1)} columnDefs={colDefs} defaultColDef={defaultColDef} />
+          <AgGridReact suppressColumnVirtualisation={true} rowData={props.data.filter((data) => parseInt(data.slot1) === 2 * num + 1).sort((a, b) => a.order1 - b.order1)} columnDefs={colDefs} defaultColDef={defaultColDef} />
         </div>
       </div>
       <div class="item">
         <h3>Room: 22C </h3>
         <div className="ag-theme-quartz" style={{ height: 300 }}>
-          <AgGridReact suppressColumnVirtualisation={true} rowData={props.data.filter((data) => data.slot1 == 2 * num + 2).sort((a, b) => a.order1 - b.order1)} columnDefs={colDefs} defaultColDef={defaultColDef} />
+          <AgGridReact suppressColumnVirtualisation={true} rowData={props.data.filter((data) => parseInt(data.slot1) === 2 * num + 2).sort((a, b) => a.order1 - b.order1)} columnDefs={colDefs} defaultColDef={defaultColDef} />
         </div>
       </div>
     </div>

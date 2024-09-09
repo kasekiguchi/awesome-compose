@@ -12,13 +12,12 @@ const ContaineredSession = (props) => {
     let lab = gridObject.data.lab;
     return (<a href={'./' + lab + '究室/' + tag + '.pdf'}>{title}</a>);
   };
-  const timeRenderer = (gridObject) => {
-    let slot = gridObject.data.slot1;
-    let order = gridObject.data.order1;
-    let time = "null";
-    time = stime[Math.floor((slot - 1) / 2)];
-    return (<>{time}</>);
-  };
+  // const timeRenderer = (gridObject) => {
+  //   let slot = gridObject.data.slot1;
+  //   let time = "null";
+  //   time = stime[Math.floor((slot - 1) / 2)];
+  //   return (<>{time}</>);
+  // };
   const colDefs = [
     //    { headerName: '時間', cellRenderer: timeRenderer, width: 120 },
     // {
@@ -47,13 +46,13 @@ const ContaineredSession = (props) => {
       <div class="item">
         <h3>Room: 21A </h3>
         <div className="ag-theme-quartz" style={{ height: 300 }}>
-          <AgGridReact suppressColumnVirtualisation={true} rowData={props.data.filter((data) => data.slot == 4 * num + 1).sort((a, b) => a.order - b.order)} columnDefs={colDefs} defaultColDef={defaultColDef} />
+          <AgGridReact suppressColumnVirtualisation={true} rowData={props.data.filter((data) => parseInt(data.slot) === 4 * num + 1).sort((a, b) => a.order - b.order)} columnDefs={colDefs} defaultColDef={defaultColDef} />
         </div>
       </div>
       <div class="item">
         <h3>Room: 21B </h3>
         <div className="ag-theme-quartz" style={{ height: 300 }}>
-          <AgGridReact suppressColumnVirtualisation={true} rowData={props.data.filter((data) => data.slot == 4 * num + 2).sort((a, b) => a.order - b.order)} columnDefs={colDefs} defaultColDef={defaultColDef} />
+          <AgGridReact suppressColumnVirtualisation={true} rowData={props.data.filter((data) => parseInt(data.slot) === 4 * num + 2).sort((a, b) => a.order - b.order)} columnDefs={colDefs} defaultColDef={defaultColDef} />
         </div>
       </div>
     </div>
@@ -61,13 +60,13 @@ const ContaineredSession = (props) => {
       <div class="item">
         <h3>Room: 22A </h3>
         <div className="ag-theme-quartz" style={{ height: 300 }}>
-          <AgGridReact suppressColumnVirtualisation={true} rowData={props.data.filter((data) => data.slot == 4 * num + 3).sort((a, b) => a.order - b.order)} columnDefs={colDefs} defaultColDef={defaultColDef} />
+          <AgGridReact suppressColumnVirtualisation={true} rowData={props.data.filter((data) => parseInt(data.slot) === 4 * num + 3).sort((a, b) => a.order - b.order)} columnDefs={colDefs} defaultColDef={defaultColDef} />
         </div>
       </div>
       <div class="item">
         <h3>Room: 22B </h3>
         <div className="ag-theme-quartz" style={{ height: 300 }}>
-          <AgGridReact suppressColumnVirtualisation={true} rowData={props.data.filter((data) => data.slot == 4 * num + 4).sort((a, b) => a.order - b.order)} columnDefs={colDefs} defaultColDef={defaultColDef} />
+          <AgGridReact suppressColumnVirtualisation={true} rowData={props.data.filter((data) => parseInt(data.slot) === 4 * num + 4).sort((a, b) => a.order - b.order)} columnDefs={colDefs} defaultColDef={defaultColDef} />
         </div>
       </div>
     </div>
@@ -79,7 +78,7 @@ const WSession = (props) => {
   const data = props.data;
   let ndata = data.map(i => { return { 'title': i.title, 'tag': i.tag, 'lab': i.lab, 'name': i.name, 'slot': i.slot1, 'order': i.order1 }; });
   ndata = ndata.concat(data.map(i => { return { 'title': i.title, 'tag': i.tag, 'lab': i.lab, 'name': i.name, 'slot': i.slot2, 'order': i.order2 }; }));
-  let Sessions = [0, 1, 2].map(i => ndata.filter(item => Math.floor((item.slot - 1) / 4) == i));
+  let Sessions = [0, 1, 2].map(i => ndata.filter(item => Math.floor((item.slot - 1) / 4) === i));
   console.log(Sessions);
   return (<>
     <ContaineredSession num={0} data={Sessions[0]} />

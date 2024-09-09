@@ -3,6 +3,7 @@ services:
   frontend:
     build:
       context: frontend
+      # target: builder
       target: development
     container_name: frontend
     hostname: frontend
